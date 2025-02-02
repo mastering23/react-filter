@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# React practices || Inside App.js
+Learning concepts
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![alt text](image.png)
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+### Import statements:
+-------
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+import { Component } from 'react';: This imports the Component class from React, which is the base class that allows you to create class components.
+import './App.css';: This imports the CSS file named App.css, which likely contains styles for the component.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Class Definition:
+class App extends Component: This defines a React class component named App. It extends (inherits) from the base Component class provided by React.
 
-### `npm test`
+### Constructor:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+constructor(): This is the constructor function of the class, called when the component is initialized. It is used to set up the initial state and to bind methods if necessary.
+### Super:
+super();: This calls the constructor of the parent class (Component). You must call super() before using this in a class constructor.
+this.state: The state object holds the internal data of the component. In this example, state is initialized with an empty array cartoons: [], which suggests that this component will later manage or display a list of cartoons.
 
-### `npm run build`
+------
+## [ Fetch | Promise ]
+![alt text](image-1.png)
+### componentDidMount:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This is a lifecycle method in React class components. It is called automatically after the component is first rendered (mounted) in the DOM. It's commonly used for side effects, such as fetching data from an API.
+In this case, you're using componentDidMount to fetch data as soon as the component is mounted.
+fetch('https://jsonplaceholder.typicode.com/users'):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This line makes an HTTP GET request to the specified API endpoint (https://jsonplaceholder.typicode.com/users), which returns a list of users in JSON format. The fetch function returns a promise.
+.then(response => response.json()):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After the data is fetched, this step processes the response by converting it into a JavaScript object (JSON format). The .json() method also returns a promise.
+.then((users) => this.setState(() => { return {cartoons: users} })):
 
-### `npm run eject`
+Once the JSON data (list of users) is available, this step sets the component's state by updating the cartoons array with the list of users.
+The this.setState() method is used to update the component's state. Here, it takes a function as an argument that returns an object to update the cartoons key with the users data from the API.
+Commented Code:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+// .then(response => console.log(response)); This is a commented-out line that logs the API response to the console for debugging purposes. If uncommented, it would help you inspect the data returned from the API.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## What's happening in the code:
+When the component is rendered for the first time, componentDidMount is called.
+Inside componentDidMount, a request is made to the API to fetch a list of users.
+When the data is returned, the component's state is updated to store the fetched users inside the cartoons array. As a result, the component will re-render with the new state (which might display this data in the UI).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Render
 
-## Learn More
+![alt text](image-2.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The render method maps through the cartoons array in the component's state (which contains users fetched from an API) and creates a list of `<div>` elements. Each `<div>` contains the user's name inside an `<h1>` element. This allows the component to dynamically render content based on the fetched data.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## OUTPUT :
 
-### Code Splitting
+![alt text](image-3.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
