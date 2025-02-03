@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import CardList from './components/card-list/card-list.components';
 import './App.css';
 
 class App extends Component {
@@ -20,8 +21,15 @@ class App extends Component {
       );
   }
 
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLowerCase();
+    this.setState({ searchField });
+  }
   render() {
+
     const { cartoons, searchField } = this.state;
+    const{ onSearchChange} = this;
+
     const filteredCartoons = cartoons.filter((cartoon) =>
       cartoon.name.toLowerCase().includes(searchField)
     );
@@ -32,16 +40,8 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="search cartoons"
-          onChange={(event) => {
-            const searchField = event.target.value.toLowerCase();
-            this.setState({ searchField });
-          }}
-        />
-        {filteredCartoons.map((cartoon) => (
-          <div key={cartoon.id}>
-            <h1>{cartoon.name}</h1>
-          </div>
-        ))}
+          onChange={onSearchChange}/>        
+        <CardList cartoons = {filteredCartoons} />
       </div>
     );
   }
